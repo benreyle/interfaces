@@ -1,9 +1,9 @@
 package main
 
-import "github.com/google/uuid"
+import "encoding/json"
 
 type MemoryStore struct {
-	documents []DocumentSpec
+	documents [][]byte
 }
 
 func (s *MemoryStore) Save(doc Document) error {
@@ -13,16 +13,33 @@ func (s *MemoryStore) Save(doc Document) error {
 	}
 
 	spec := DocumentSpec{
-		Id:      uuid.New().String(),
 		Context: doc.Context(),
 		Type:    doc.Type(),
 		Data:    doc,
 	}
 
-	s.documents = append(s.documents, spec)
+	b, err := json.Marshal(spec)
+	if err != nil {
+		return err
+	}
+
+	s.documents = append(s.documents, b)
 	return nil
 }
 
-func (s MemoryStore) List() []DocumentSpec {
-	return s.documents
+func (s MemoryStore) List() ([]DocumentSpec, error) {
+	docs := make([]DocumentSpec, 0)
+
+	for _, b := range s.documents {
+		var doc DocumentSpec
+
+		err := json.Unmarshal(b, &doc)
+		if err != nil {
+			return nil, err
+		}
+
+		docs = append(docs, doc)
+	}
+
+	return docs, nil
 }

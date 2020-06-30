@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
@@ -51,19 +50,10 @@ func main() {
 		panic(err)
 	}
 
-	docs := store.List()
-
-	bytes, err := json.Marshal(docs)
+	docs, err := store.List()
 	if err != nil {
 		panic(err)
 	}
 
-	specs := []DocumentSpec{}
-
-	err = json.Unmarshal(bytes, &specs)
-	if err != nil {
-		panic(err)
-	}
-
-	spew.Dump(specs)
+	spew.Dump(docs)
 }

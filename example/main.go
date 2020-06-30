@@ -1,9 +1,9 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
 	"time"
+
+	"github.com/davecgh/go-spew/spew"
 )
 
 func createRG() RG {
@@ -39,12 +39,10 @@ func main() {
 		panic(err)
 	}
 
-	docs := store.List()
-
-	bytes, err := json.Marshal(docs)
+	docs, err := store.List()
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Println(string(bytes))
+	spew.Dump(docs)
 }

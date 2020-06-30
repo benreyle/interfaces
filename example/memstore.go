@@ -14,6 +14,6 @@ func (s *MemoryStore) Save(doc Document) error {
 	return nil
 }
 
-func (s MemoryStore) List() []Document {
-	return s.documents
+func (s MemoryStore) List() ([]Document, error) {
+	return s.documents, nil
 }
