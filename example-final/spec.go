@@ -6,7 +6,6 @@ import (
 )
 
 type DocumentSpec struct {
-	Id      string
 	Context string
 	Type    string
 	Data    Document
@@ -40,4 +39,12 @@ func (s *DocumentSpec) UnmarshalJSON(b []byte) error {
 	s.Data = data
 
 	return nil
+}
+
+func createDocumentSpec(doc Document) DocumentSpec {
+	return DocumentSpec{
+		Context: doc.Context(),
+		Type:    doc.Type(),
+		Data:    doc,
+	}
 }

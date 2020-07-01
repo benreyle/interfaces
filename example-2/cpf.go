@@ -14,7 +14,7 @@ func (d CPF) Context() string {
 }
 
 func (d CPF) Type() string {
-	return "rg"
+	return "cpf"
 }
 
 func (d CPF) Vouchers() []Voucher {

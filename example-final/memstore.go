@@ -6,16 +6,10 @@ type MemoryStore struct {
 	documents [][]byte
 }
 
-func (s *MemoryStore) Save(doc Document) error {
-	err := doc.Validate()
+func (s *MemoryStore) Save(spec DocumentSpec) error {
+	err := spec.Data.Validate()
 	if err != nil {
 		return err
-	}
-
-	spec := DocumentSpec{
-		Context: doc.Context(),
-		Type:    doc.Type(),
-		Data:    doc,
 	}
 
 	b, err := json.Marshal(spec)

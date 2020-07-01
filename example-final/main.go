@@ -6,8 +6,8 @@ import (
 	"github.com/davecgh/go-spew/spew"
 )
 
-func main() {
-	rg := RG{
+func createRG() RG {
+	return RG{
 		Numero:             "376817884",
 		OrgaoEmissor:       "SSP",
 		UF:                 "SP",
@@ -27,8 +27,10 @@ func main() {
 			},
 		},
 	}
+}
 
-	cpf := CPF{
+func createCPF() CPF {
+	return CPF{
 		Numero: "25036156005",
 		Comprovantes: []Voucher{
 			{
@@ -37,6 +39,11 @@ func main() {
 			},
 		},
 	}
+}
+
+func main() {
+	rg := createDocumentSpec(createRG())
+	cpf := createDocumentSpec(createCPF())
 
 	store := MemoryStore{}
 

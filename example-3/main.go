@@ -29,12 +29,30 @@ func createRG() RG {
 	}
 }
 
+func createCPF() CPF {
+	return CPF{
+		Numero: "25036156005",
+		Comprovantes: []Voucher{
+			{
+				Type: "frente",
+				File: "/img/teste.jpg",
+			},
+		},
+	}
+}
+
 func main() {
 	rg := createRG()
+	cpf := createCPF()
 
 	store := MemoryStore{}
 
 	err := store.Save(rg)
+	if err != nil {
+		panic(err)
+	}
+
+	err = store.Save(cpf)
 	if err != nil {
 		panic(err)
 	}

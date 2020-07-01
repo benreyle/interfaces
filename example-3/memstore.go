@@ -12,7 +12,13 @@ func (s *MemoryStore) Save(doc Document) error {
 		return err
 	}
 
-	b, err := json.Marshal(doc)
+	spec := DocumentSpec{
+		Context: doc.Context(),
+		Type:    doc.Type(),
+		Data:    doc,
+	}
+
+	b, err := json.Marshal(spec)
 	if err != nil {
 		return err
 	}
@@ -25,14 +31,14 @@ func (s MemoryStore) List() ([]Document, error) {
 	docs := make([]Document, 0)
 
 	for _, b := range s.documents {
-		var doc Document
+		var doc DocumentSpec
 
 		err := json.Unmarshal(b, &doc)
 		if err != nil {
 			return nil, err
 		}
 
-		docs = append(docs, doc)
+		docs = append(docs, doc.Data)
 	}
 
 	return docs, nil
